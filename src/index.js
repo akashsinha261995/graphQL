@@ -23,6 +23,12 @@ type Mutation {
     name: String!, 
     age: Int!
     ): User!
+
+    addPost(
+    title: String!, 
+    content: String!, 
+    authorId: ID!
+    ): Post!
 }
 
 type Query {
@@ -96,6 +102,17 @@ const resolvers = {
       };
       users.push(newUser);
       return newUser;
+    },
+    // Create and return a new post, storing it in the local array.
+    addPost: (_, args) => {
+      const newPost = {
+        id: String(posts.length + 1),
+        title: args.title,
+        content: args.content,
+        authorId: args.authorId,
+      };
+      posts.push(newPost);
+      return newPost;
     },
   },
   User: {
